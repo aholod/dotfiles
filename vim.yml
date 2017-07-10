@@ -1,0 +1,49 @@
+---
+- hosts: all
+  vars:
+    # ansible_python_interpreter: '/usr/bin/env python3'
+  gather_facts: yes
+  tasks:
+    - file: src={{ curdir }}/files/{{ item }} dest=~/.{{ item }} state=link
+      with_items:
+        - vimrc
+
+    - file: path=~/.vim/{{ item }} state=directory recurse=Yes
+      with_items:
+        - autoload
+
+    - file: src={{ curdir }}/files/vimrc dest=~/.config/nvim/init.vim state=link
+
+    - yum:
+        name: "{{ item }}"
+        state: latest
+      become: yes
+      with_items:
+        - ctags-etags
+        - neovim
+      when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int >= 5
+
+    - pip:
+        name: "{{ item.name }}"
+        extra_args: "{{ item.extra|default(omit) }}"
+      with_items:
+        - { name: pip, extra: "--upgrade" }
+        - { name: neovim }
+      become: yes
+
+    - get_url:
+        dest: ~/.vim/autoload/plug.vim
+        url: 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    # - git:
+    #     repo: 'https://github.com/VundleVim/Vundle.vim.git'
+    #     dest: ~/.vim/bundle/Vundle.vim
+        # version: v0.10.2
+
+    - file: path=~/.vim/spell state=directory
+
+    - lineinfile:
+        path: ~/.bashrc
+        line: alias vim='nvim'
+
+    # - command: nvim -i NONE -c PlugUpdate -c quitall
+    # FIXME: compile https://github.com/Shougo/vimproc.vim
