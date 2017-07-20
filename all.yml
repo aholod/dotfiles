@@ -1,5 +1,6 @@
 ---
 
+- include: 'env.yml'
 - include: 'vim.yml'
 # - include: 'dotfiles.yml'
 # - include: 'addons.yml'
