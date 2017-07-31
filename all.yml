@@ -1,6 +1,7 @@
 ---
 
-- include: 'env.yml'
-- include: 'vim.yml'
+# - include: '_env.yml'
+  - include: '_tmux.yml'
+# - include: '_vim.yml'
 # - include: 'dotfiles.yml'
 # - include: 'addons.yml'

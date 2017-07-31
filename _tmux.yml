@@ -1,0 +1,19 @@
+---
+- hosts: all
+  vars:
+    # ansible_python_interpreter: '/usr/bin/env python3'
+  gather_facts: no
+  tasks:
+    - yum:
+        name: tmux
+        state: latest
+      become: yes
+
+    - get_url:
+        url: https://raw.githubusercontent.com/srsudar/tmux-completion/master/tmux
+        dest: /etc/bash_completion.d
+      become: yes
+
+    - file: src={{ curdir }}/files/{{ item }} dest=~/.{{ item }} state=link
+      with_items:
+        - tmux.conf
