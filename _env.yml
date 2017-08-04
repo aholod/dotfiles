@@ -12,3 +12,10 @@
           export HISTCONTROL=ignoredups:erasedups
           shopt -s histappend
 
+    - yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - bash-completion
+        - bash-completion-extras
+      become: yes
