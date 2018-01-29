@@ -21,7 +21,7 @@
       with_items:
         - ctags-etags
         - neovim
-      when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int >= 5
+#      when: ansible_os_family == "RedHat" and ansible_lsb.major_release|int >= 5
 
     - pip:
         name: "{{ item.name }}"

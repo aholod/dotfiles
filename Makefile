@@ -5,7 +5,7 @@ install_vim:
 	ansible-playbook vim.yml -i local -vv -e curdir=$(CURDIR)
 
 prepare_rh:
-	sudo yum install -y git ansible python34 python34-devel python-devel
+	sudo yum install -y git ansible python34 python34-devel python-devel python-pip pytho34-pip
 
 prepare_ub:
 	sudo apt install git ansible python3 python3-dev
